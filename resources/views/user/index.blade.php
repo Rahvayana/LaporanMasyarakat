@@ -23,7 +23,7 @@
                                 <th>Nama</th>
                                 <th>Email</th>
                                 <th>No HP</th>
-                                <th>Umur</th>
+                                <th>NIK</th>
                                 <th>Action</th>
                             </tr>
                         </thead>

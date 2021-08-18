@@ -64,6 +64,7 @@
                                 @endforeach
                             </td>
                         </tr>
+                        @if (Auth::user()->role=='ADMIN')
                         <form action="{{ route('pengaduan.penyidik',$report->id ) }}" id="myform" method="POST">@csrf
                             <tr>
                                 <td>Pilih Penyidik</td>
@@ -82,6 +83,7 @@
                                 </tr>
                             </tr>
                         </form>
+                        @endif
                     </table>
                 </div>
             </div>

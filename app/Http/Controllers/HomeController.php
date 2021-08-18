@@ -85,8 +85,9 @@ class HomeController extends Controller
             'proyek' => 'required',
             'anggaran' => 'required',
             'deskripsi' => 'required',
-            'file' => 'required|max:2048',
+            'file' => 'mimes:png,jpg,pdf,max:2048',
         ]);
+ 
         $i=1;
         foreach($request->file as $file){
             $fileName=time().$i.'.'.$file->getClientOriginalExtension();

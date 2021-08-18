@@ -28,6 +28,10 @@
                                             <input type="text" class="form-control" placeholder="Nama/Instansi" name="name">
                                         </div>
                                         <div class="form-group">
+                                            <label class="mb-1"><strong>NIK</strong></label>
+                                            <input type="text" class="form-control" placeholder="21" value="{{ old('umur') }}"  name="umur">
+                                        </div>
+                                        <div class="form-group">
                                             <label class="mb-1"><strong>Email</strong></label>
                                             <input type="email" class="form-control" placeholder="hello@example.com" value="{{ old('email') }}"  name="email">
                                         </div>
@@ -38,10 +42,6 @@
                                         <div class="form-group">
                                             <label class="mb-1"><strong>Alamat</strong></label>
                                             <input type="text" class="form-control" placeholder="Jalan...." value="{{ old('alamat') }}"  name="alamat">
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="mb-1"><strong>Umur</strong></label>
-                                            <input type="text" class="form-control" placeholder="21" value="{{ old('umur') }}"  name="umur">
                                         </div>
                                         <div class="form-group">
                                             <label class="mb-1"><strong>Password</strong></label>
