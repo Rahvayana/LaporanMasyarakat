@@ -30,7 +30,9 @@
                                 <td>{{$report->status}}</td>
                                 <td>
                                     @if (Auth::user()->role!='PENYIDIK')
+                                    @if ($report->status!='RECEIVED')
                                     <a href="{{ route('pengaduan.chat',$report->id) }}" class="btn btn-rounded btn-dark"><i class="fa  fa-wechat color-dark"></i></a>
+                                    @endif
                                     <a href="{{ route('pengaduan.detail',$report->id) }}" class="btn btn-rounded btn-dark"><i class="fa fa-pencil color-dark"></i></a>
                                     <a href="" class="btn btn-rounded btn-dark"><i class="fa fa-trash color-dark"></i></a>
                                     @else

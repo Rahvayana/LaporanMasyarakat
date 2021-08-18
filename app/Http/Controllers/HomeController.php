@@ -51,7 +51,7 @@ class HomeController extends Controller
 
     public function pengaduan()
     {
-        if(Auth::user()->role!='USER'||Auth::user()->role!='ADMIN'){
+        if(Auth::user()->role!='PENYIDIK'){
             $data['reports'] = DB::table('reports')->select('reports.*','users.name')
                 ->leftJoin('users', 'users.id', 'reports.user_id')
                 ->where(function ($query) {
@@ -64,6 +64,7 @@ class HomeController extends Controller
                 ->leftJoin('reports', 'reports.id', 'inspectors.report_id')
                 ->leftJoin('users', 'users.id', 'reports.user_id')
                 ->orderBy('created_at','DESC')
+                ->where('inspectors.user_id',Auth::id())
                 ->get();
         }
         
@@ -144,13 +145,23 @@ class HomeController extends Controller
                 ->leftJoin('users', 'users.id', 'reports.user_id')
                 ->where('reports.id',$id)
                 ->first();
-        $inspector=DB::table('inspectors')->select('inspectors.user_id','users.name as pelapor')
+        $inspector=DB::table('inspectors')->select('inspectors.user_id','users.name as pelapor','users.id as id_pelapor')
         ->leftJoin('reports', 'reports.id', 'inspectors.report_id')
         ->leftJoin('users', 'users.id', 'reports.user_id')
         ->where('reports.id',$id)
         ->first();
+        if(Auth::user()->role=='USER'&&$inspector->id_pelapor!=Auth::id()){
+            
+            return view('errors.401');
+        }
+        if(Auth::user()->role=='PENYIDIK'&&$inspector->user_id!=Auth::id()){
+           
+            return view('errors.401');
+        }
         $data['inspector']=User::find($inspector->user_id);
-        $data['chats']=Message::where('report_id',$id)->get();
+        $data['chats']=Message::select('messages.body','users.name','users.role')
+        ->leftJoin('users','users.id','messages.sender_id')
+        ->where('report_id',$id)->get();
         // dd($data);
         return view('pages.chat',$data);
     }

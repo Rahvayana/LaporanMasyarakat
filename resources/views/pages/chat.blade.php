@@ -52,19 +52,20 @@
         <div class="card chat dz-chat-history-box">
             <div class="card-body msg_card_body dz-scroll" id="DZ_W_Contacts_Body3">
                 @foreach ($chats as $chat)
-                    @if ($loop->iteration%2!=0)
+                    {{-- @if ($loop->iteration%2!=0) --}}
                     <div class="d-flex justify-content-start mb-4">
                         <div class="msg_cotainer">
-                            {{$chat->body}}
+                            {{$chat->body}} <br>
+                            <span style="font-size: 12px">{{$chat->role}}: {{$chat->name}}</span>
                         </div>
                     </div>
-                    @else
-                    <div class="d-flex justify-content-end mb-4">
+                    {{-- @else --}}
+                    {{-- <div class="d-flex justify-content-end mb-4">
                         <div class="msg_cotainer_send">
                             {{$chat->body}}
                         </div>
                     </div>
-                    @endif
+                    @endif --}}
                 @endforeach
             </div>
             <div class="card-footer type_msg">
