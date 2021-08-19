@@ -26,6 +26,7 @@ Route::get('/pengaduan', [HomeController::class, 'pengaduan'])->name('pengaduan.
 Route::get('/tambah-pengaduan', [HomeController::class, 'tambahPengaduan'])->name('pengaduan.add');
 Route::post('/simpan-pengaduan', [HomeController::class, 'simpanPengaduan'])->name('pengaduan.store');
 Route::get('/pengaduan/{id}', [HomeController::class, 'detailPengaduan'])->name('pengaduan.detail');
+Route::post('/pengaduan-delete/{id}', [HomeController::class, 'delete'])->name('pengaduan.delete');
 Route::post('/pengaduan-penyidik/{id}', [HomeController::class, 'pilihPenyidik'])->name('pengaduan.penyidik');
 Route::get('/pengaduan-ticket/{id}', [HomeController::class, 'chat'])->name('pengaduan.chat');
 Route::post('/chat', [HomeController::class, 'chatting'])->name('pengaduan.chatting');

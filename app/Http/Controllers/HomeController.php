@@ -6,6 +6,7 @@ use App\Models\Inspector;
 use App\Models\Message;
 use App\Models\Report;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -58,13 +59,15 @@ class HomeController extends Controller
                     if (Auth::user()->role=='USER') {
                         $query->where('reports.user_id', Auth::id());
                     }
-                })->orderBy('created_at','DESC')->get();
+                })->whereNull('reports.deleted_at')
+                ->orderBy('created_at','DESC')->get();
         }else{
             $data['reports'] = DB::table('inspectors')->select('reports.*','users.name')
                 ->leftJoin('reports', 'reports.id', 'inspectors.report_id')
                 ->leftJoin('users', 'users.id', 'reports.user_id')
                 ->orderBy('created_at','DESC')
                 ->where('inspectors.user_id',Auth::id())
+                ->whereNull('reports.deleted_at')
                 ->get();
         }
         
@@ -124,6 +127,12 @@ class HomeController extends Controller
         $data['inspectors']=User::where('role','PENYIDIK')->get();
         // dd($data);
         return view('pages.detail',$data);
+    }
+
+    public function delete($id)
+    {
+        DB::table('reports')-> where('id',$id)->update(['deleted_at' => Carbon::now()]);;
+        
     }
 
     public function pilihPenyidik($id,Request $request)

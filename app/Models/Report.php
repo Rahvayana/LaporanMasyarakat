@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Report extends Model
 {
+    protected $table='reports';
     use HasFactory, SoftDeletes;
     protected $dates = ['deleted_at'];
 

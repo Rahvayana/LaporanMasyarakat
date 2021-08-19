@@ -34,7 +34,7 @@
                                     <a href="{{ route('pengaduan.chat',$report->id) }}" class="btn btn-rounded btn-dark"><i class="fa  fa-wechat color-dark"></i></a>
                                     @endif
                                     <a href="{{ route('pengaduan.detail',$report->id) }}" class="btn btn-rounded btn-dark"><i class="fa fa-pencil color-dark"></i></a>
-                                    <a href="" class="btn btn-rounded btn-dark"><i class="fa fa-trash color-dark"></i></a>
+                                    <a href="#" data-record-id="{{$report->id}}" data-toggle="modal" data-target="#confirm-delete"  class="btn btn-rounded btn-dark"><i class="fa fa-trash color-dark"></i></a>
                                     @else
                                     <a href="{{ route('pengaduan.chat',$report->id) }}" class="btn btn-rounded btn-dark"><i class="fa  fa-wechat color-dark"></i></a>
                                     @endif
@@ -49,4 +49,46 @@
         <!-- /# card -->
     </div>
 </div>
+<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="vcenter">Hapus User</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <p>Anda yakin ingin menghapus data ini?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger btn-ok">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
+
+@section('script')
+    <script>
+    $('#confirm-delete').on('click', '.btn-ok', function(e) {
+        var $modalDiv = $(e.delegateTarget);
+        var id = $(this).data('recordId');
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        
+        $.post('/pengaduan-delete/' + id).then()
+        $modalDiv.addClass('loading');
+        setTimeout(function() {
+            location.reload();            
+        })
+    });
+    $('#confirm-delete').on('show.bs.modal', function(e) {
+        var data = $(e.relatedTarget).data();
+        $('.btn-ok', this).data('recordId', data.recordId);
+    });
+    </script>
 @endsection
