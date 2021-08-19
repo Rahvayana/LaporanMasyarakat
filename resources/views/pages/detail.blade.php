@@ -59,9 +59,13 @@
                             <td>Dokumen</td>
                             <td>:</td>
                             <td>
+                                @if (json_decode($report->dokumen)[0])
                                 @foreach (json_decode($report->dokumen) as $key=>$doc)
                                     <a href={{ asset('/assets/files/'.$doc) }}>Dokumen {{$key+=1}}</a><br>
                                 @endforeach
+                                @else
+                                -
+                                @endif
                             </td>
                         </tr>
                         @if (Auth::user()->role=='ADMIN')

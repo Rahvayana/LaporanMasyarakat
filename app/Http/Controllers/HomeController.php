@@ -87,16 +87,20 @@ class HomeController extends Controller
             'deskripsi' => 'required',
             'file' => 'mimes:png,jpg,pdf,max:2048',
         ]);
+
+        $files[]=array();
  
         $i=1;
-        foreach($request->file as $file){
-            $fileName=time().$i.'.'.$file->getClientOriginalExtension();
-            if ($request->file) {
-                $path = public_path().'/assets/files';
-                $file->move($path,$fileName);
+        if($request->file){
+            foreach($request->file as $file){
+                $fileName=time().$i.'.'.$file->getClientOriginalExtension();
+                if ($request->file) {
+                    $path = public_path().'/assets/files';
+                    $file->move($path,$fileName);
+                }
+                $files[]=$fileName;
+                $i++;
             }
-            $files[]=$fileName;
-            $i++;
         }
         $report=new Report();
         $report->user_id=Auth::id();
